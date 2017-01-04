@@ -26,6 +26,22 @@
           "mountPath": "/srv/kubernetes"
         },
         {
+          "name": "rbd",
+          "mountPath": "/bin/rbd"
+        },
+        {
+          "name": "usr-lib",
+          "mountPath": "/host/lib"
+        },
+        {
+          "name": "docker",
+          "mountPath": "/bin/docker"
+        },
+        {
+          "name": "docker-sock",
+          "mountPath": "/var/run/docker.sock"
+        },
+        {
           "name": "kubeconfig",
           "mountPath": "/var/lib/kubelet/kubeconfig"
         }
@@ -39,7 +55,7 @@
               "apiserver",
               "--service-cluster-ip-range=10.0.0.1/24",
               "--etcd-servers=http://127.0.0.1:2379",
-              "--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota",
+              "--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota",
               "--basic-auth-file=/srv/kubernetes/basic_auth.csv",
               "--min-request-timeout=300",
               "--client-ca-file=/srv/kubernetes/ca.crt",
@@ -47,6 +63,7 @@
               "--tls-private-key-file=/srv/kubernetes/server.key",
               "--service-account-key-file=/srv/kubernetes/server.key",
               "--service-account-lookup=false",
+              "--service-node-port-range=1-32767",
               "--token-auth-file=/srv/kubernetes/known_tokens.csv",
               "--allow-privileged=true",
               "--apiserver-count=1",
@@ -110,6 +127,30 @@
     {
       "name": "data",
       "emptyDir": {}
+    },
+    {
+      "name": "rbd",
+      "hostPath": {
+        "path": "/opt/bin/rbd"
+      }
+    },
+    {
+      "name": "usr-lib",
+      "hostPath": {
+        "path": "/usr/lib/"
+      }
+    },
+    {
+      "name": "docker",
+      "hostPath": {
+        "path": "/usr/bin/docker"
+      }
+    },
+    {
+      "name": "docker-sock",
+      "hostPath": {
+        "path": "/var/run/docker.sock"
+      }
     },
     {
       "name": "cp-certs",
