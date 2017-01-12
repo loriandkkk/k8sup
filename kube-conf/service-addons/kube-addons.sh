@@ -79,7 +79,7 @@ function update_addons() {
   
   for filename in $(ls ${ADDON_PATH}); do
     namespace=$( echo ${filename} | awk -F _ '{print$1}')
-    run_until_success "${KUBECTL} ${KUBECTL_OPTS} --namespace=${namespace} apply -f ${ADDON_PATH}/${filename} --prune=${enable_prune} -l vsdx/cluster-service=true ${additional_opt}" 1 1
+    run_until_success "${KUBECTL} ${KUBECTL_OPTS} --namespace=${namespace} apply -f ${ADDON_PATH}/${filename} --prune=${enable_prune} -l cdxvirt/cluster-service=true ${additional_opt}" 1 1
     log INFO "++ obj ${filename} is created ++"
   done
 
