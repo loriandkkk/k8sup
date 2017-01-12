@@ -30,8 +30,8 @@ spec:
           mountPath: /etc/kubernetes/addons
       volumes:
       - name: addons
-        configMap:
-          name: addons-config
+        hostPath:
+          path: /etc/kubernetes/service-addons
       - name: kube-addons
         hostPath:
           path: /etc/kubernetes/kube-addons.sh
